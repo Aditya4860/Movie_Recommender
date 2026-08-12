@@ -1,0 +1,5 @@
+Collecting numpy==2.5.2
+  Using cached numpy-2.5.2-cp314-cp314-win_amd64.whl.metadata (6.6 kB)
+Downloading numpy-2.5.2-cp314-cp314-win_amd64.whl (12.6 MB)
+   ----                                     1.6/12.6 MB ? eta -:--:--
+Resuming download numpy-2.5.2-cp314-cp314-win_amd64.whl (1.6 MB/12.6 MB)

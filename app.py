@@ -1,38 +1,38 @@
-"""Streamlit interface for the TMDB content-based movie recommender."""
+"""CineMatch: a multi-page content-based movie discovery app."""
 
-from pathlib import Path
+from __future__ import annotations
 
 import streamlit as st
 
-from src.recommender import MovieRecommender
 
+st.set_page_config(
+    page_title="CineMatch",
+    page_icon=":material/movie:",
+    layout="wide",
+    initial_sidebar_state="expanded",
+)
 
-st.set_page_config(page_title="Movie Recommender", page_icon="🎬", layout="centered")
+st.session_state.setdefault("favourites", [])
 
+with st.sidebar:
+    st.title("CineMatch")
+    st.caption("TMDB movie discovery studio")
+    st.badge("Content-based model", icon=":material/auto_awesome:", color="violet")
+    st.space("small")
+    st.caption("Built from the TMDB 5000 Movie Dataset")
 
-@st.cache_resource(show_spinner="Building movie similarity index...")
-def load_recommender() -> MovieRecommender:
-    return MovieRecommender.from_csv(Path("data"))
+pages = st.navigation(
+    {
+        "Discover": [
+            st.Page("app_pages/dashboard.py", title="Dashboard", icon=":material/dashboard:"),
+            st.Page("app_pages/recommend.py", title="Recommend", icon=":material/auto_awesome:"),
+            st.Page("app_pages/explore.py", title="Explore", icon=":material/explore:"),
+        ],
+        "Library": [
+            st.Page("app_pages/favourites.py", title="My list", icon=":material/bookmark:"),
+            st.Page("app_pages/about.py", title="About the model", icon=":material/psychology:"),
+        ],
+    }
+)
 
-
-st.title("🎬 Movie Recommender")
-st.caption("Content-based recommendations from genres, plot keywords, cast, and director.")
-
-try:
-    recommender = load_recommender()
-except (FileNotFoundError, ValueError) as error:
-    st.error(str(error))
-    st.info(
-        "Download the TMDB 5000 Movie Dataset and place the movie and credits CSV files in the `data/` folder. "
-        "See the README for accepted filenames."
-    )
-    st.stop()
-
-selected_title = st.selectbox("Choose a movie", recommender.titles, index=None, placeholder="Search for a movie...")
-number_of_results = st.slider("Recommendations", min_value=3, max_value=10, value=5)
-
-if selected_title:
-    results = recommender.recommend(selected_title, number_of_results)
-    st.subheader(f"Because you liked {selected_title}")
-    for rank, movie in results.reset_index(drop=True).iterrows():
-        st.write(f"**{rank + 1}. {movie['title']}**  ·  {movie['similarity']}% similar")
+pages.run()

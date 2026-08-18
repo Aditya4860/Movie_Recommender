@@ -16,3 +16,7 @@ data/*.csv
 
 # Environment files
 .env
+.streamlit/secrets.toml
+
+# Logs
+*.log

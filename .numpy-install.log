@@ -3,3 +3,6 @@ Collecting numpy==2.5.2
 Downloading numpy-2.5.2-cp314-cp314-win_amd64.whl (12.6 MB)
    ----                                     1.6/12.6 MB ? eta -:--:--
 Resuming download numpy-2.5.2-cp314-cp314-win_amd64.whl (1.6 MB/12.6 MB)
+   ---------------------------------------- 12.6/12.6 MB 27.8 kB/s  0:04:59
+Installing collected packages: numpy
+Successfully installed numpy-2.5.2

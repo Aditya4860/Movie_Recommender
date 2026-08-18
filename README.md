@@ -9,6 +9,8 @@ A content-based movie recommendation system built with the TMDB 5000 Movie Datas
 
 This project was created as a BTech machine-learning learning project. It demonstrates a complete content-based recommendation workflow: turning raw movie metadata into features, comparing those features mathematically, and presenting useful recommendations in a simple web interface.
 
+The primary goal of this system is to help users discover new movies based on their favorite titles. By analyzing the inherent attributes of a movie (like its genre, plot summary, director, and cast), the system identifies and suggests films that share a similar DNA, without relying on collaborative user ratings or historical watch data.
+
 ## Features
 
 - **Content-based filtering** using genres, overview, keywords, cast, and director
@@ -101,10 +103,10 @@ Example output:
 
 ## Technologies used
 
-- Python
-- Pandas
-- Scikit-learn
-- Streamlit
+- **Python**: Core programming language.
+- **Pandas**: Used for data manipulation, cleaning, and preprocessing of the TMDB dataset (merging dataframes, handling missing values, applying transformations).
+- **Scikit-learn**: Used for machine learning tasks, specifically `CountVectorizer` for text vectorization (creating the bag-of-words model) and `cosine_similarity` for calculating the mathematical similarity between movie vectors.
+- **Streamlit**: Used to build and serve the interactive web frontend for the recommendation engine, allowing users to easily search for and visualize recommendations.
 
 ## Future improvements
 

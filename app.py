@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import streamlit as st
-
+from pathlib import Path
 
 st.set_page_config(
     page_title="CineMatch",
@@ -11,6 +11,14 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+def load_css() -> None:
+    """Inject custom CSS for premium aesthetics."""
+    css_path = Path("assets/style.css")
+    if css_path.exists():
+        st.markdown(f"<style>{css_path.read_text()}</style>", unsafe_allow_html=True)
+
+load_css()
 
 st.session_state.setdefault("favourites", [])
 st.session_state.setdefault("ratings", {})

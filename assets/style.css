@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Inter:wght@300;400;500&display=swap');
+
+/* Apply base font */
+html, body, [class*="css"] {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Headers typography */
+h1, h2, h3 {
+    font-family: 'Outfit', sans-serif !important;
+    font-weight: 800 !important;
+}
+
+/* Gradient primary header */
+h1 {
+    background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+}
+
+/* Enhance standard metric cards */
+[data-testid="stMetric"] {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+[data-testid="stMetric"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+}
+
+/* Bordered containers (Movie Cards) */
+div[data-testid="stVerticalBlockBorderWrapper"] > div {
+    background: rgba(22, 29, 51, 0.6) !important; 
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    border-radius: 16px !important;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hover for movie cards */
+div[data-testid="stVerticalBlockBorderWrapper"] > div:hover {
+    transform: scale(1.01);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+    border-color: rgba(79, 172, 254, 0.3) !important;
+}
+
+/* Smooth out buttons */
+.stButton button, .stLinkButton a {
+    border-radius: 8px !important;
+    transition: all 0.2s ease;
+}
+
+.stButton button:hover, .stLinkButton a:hover {
+    transform: translateY(-1px);
+}

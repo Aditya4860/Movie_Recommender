@@ -31,3 +31,27 @@ def fetch_poster_url(movie_id: int) -> str | None:
         pass
         
     return None
+
+
+@st.cache_data(show_spinner=False, ttl=86400)
+def fetch_trailer_url(movie_id: int) -> str | None:
+    """Fetch the YouTube trailer URL for a given movie ID."""
+    if not TMDB_API_KEY:
+        return None
+        
+    url = f"https://api.themoviedb.org/3/movie/{movie_id}/videos?api_key={TMDB_API_KEY}"
+    try:
+        response = requests.get(url, timeout=5)
+        response.raise_for_status()
+        data = response.json()
+        results = data.get("results", [])
+        # Look for the first official YouTube trailer
+        for video in results:
+            if video.get("site") == "YouTube" and video.get("type") == "Trailer":
+                key = video.get("key")
+                if key:
+                    return f"https://www.youtube.com/watch?v={key}"
+    except (requests.RequestException, ValueError):
+        pass
+        
+    return None

@@ -5,7 +5,7 @@ from __future__ import annotations
 import pandas as pd
 import streamlit as st
 
-from src.api import fetch_poster_url
+from src.api import fetch_poster_url, fetch_trailer_url
 from src.catalog import load_catalog
 from src.recommender import MovieRecommender
 
@@ -41,6 +41,17 @@ def movie_row(movie: pd.Series, show_add: bool = True) -> None:
                 f":material/star: {float(movie.get('vote_average', 0)):.1f}/10 "
                 f"from {int(movie.get('vote_count', 0)):,} votes"
             )
+            
+            # Interactive rating
+            rating_key = f"rating_{movie['id']}"
+            if rating_key not in st.session_state:
+                st.session_state[rating_key] = st.session_state.ratings.get(movie["title"], None)
+                
+            st.write("Your rating:")
+            rating = st.feedback("stars", key=rating_key)
+            if rating is not None:
+                st.session_state.ratings[movie["title"]] = rating
+
         if show_add:
             with right:
                 saved = movie["title"] in st.session_state.favourites
@@ -49,7 +60,17 @@ def movie_row(movie: pd.Series, show_add: bool = True) -> None:
                     icon=":material/bookmark_added:" if saved else ":material/bookmark_add:",
                     key=f"save_{movie['id']}",
                     disabled=saved,
+                    use_container_width=True,
                 ):
                     st.session_state.favourites.append(movie["title"])
                     st.toast(f"Added {movie['title']} to My list", icon=":material/bookmark_added:")
                     st.rerun()
+
+                trailer_url = fetch_trailer_url(movie["id"])
+                if trailer_url:
+                    st.link_button(
+                        "Trailer", 
+                        url=trailer_url, 
+                        icon=":material/play_circle:", 
+                        use_container_width=True
+                    )

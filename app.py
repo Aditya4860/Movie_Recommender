@@ -13,6 +13,7 @@ st.set_page_config(
 )
 
 st.session_state.setdefault("favourites", [])
+st.session_state.setdefault("ratings", {})
 
 with st.sidebar:
     st.title("CineMatch")

@@ -16,6 +16,9 @@ The primary goal of this system is to help users discover new movies based on th
 - **Content-based filtering** using genres, overview, keywords, cast, and director
 - **Cosine similarity** to rank the closest movies
 - **Interactive Streamlit app** with searchable movie selection
+- **Premium UI** with custom CSS, modern typography (Outfit/Inter), and glassmorphism
+- **TMDB API integration** for fetching official movie posters and YouTube trailers
+- **Interactive star ratings** and a personal "My List" to save favorites
 - **Command-line interface** for quick testing
 - Accepts either standard Kaggle TMDB filenames or `movies.csv` / `credits.csv`
 
@@ -79,7 +82,15 @@ pip install -r requirements.txt
 
 Place the two TMDB CSV files in the `data/` directory as described above.
 
-### 3. Run the web app
+### 3. Add TMDB API Key (Optional)
+
+To see movie posters and trailers, create a `.env` file in the root directory and add your TMDB API Key:
+
+```bash
+TMDB_API_KEY=your_api_key_here
+```
+
+### 4. Run the web app
 
 ```bash
 streamlit run app.py
@@ -107,11 +118,10 @@ Example output:
 - **Pandas**: Used for data manipulation, cleaning, and preprocessing of the TMDB dataset (merging dataframes, handling missing values, applying transformations).
 - **Scikit-learn**: Used for machine learning tasks, specifically `CountVectorizer` for text vectorization (creating the bag-of-words model) and `cosine_similarity` for calculating the mathematical similarity between movie vectors.
 - **Streamlit**: Used to build and serve the interactive web frontend for the recommendation engine, allowing users to easily search for and visualize recommendations.
+- **TMDB API**: Used to fetch dynamic multimedia content (movie posters and YouTube trailers) to enrich the user interface.
 
 ## Future improvements
 
-- Add movie posters through the TMDB API
-- Include ratings and user feedback
 - Add collaborative filtering and a hybrid model
 - Deploy the application to Streamlit Community Cloud
 

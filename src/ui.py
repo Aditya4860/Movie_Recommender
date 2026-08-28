@@ -5,6 +5,7 @@ from __future__ import annotations
 import pandas as pd
 import streamlit as st
 
+from src.api import fetch_poster_url
 from src.catalog import load_catalog
 from src.recommender import MovieRecommender
 
@@ -22,7 +23,15 @@ def get_catalog() -> pd.DataFrame:
 def movie_row(movie: pd.Series, show_add: bool = True) -> None:
     """Render a compact, data-rich movie card."""
     with st.container(border=True):
-        left, right = st.columns([5, 1], vertical_alignment="center")
+        poster_url = fetch_poster_url(movie["id"])
+        
+        if poster_url:
+            poster_col, left, right = st.columns([1, 4, 1], vertical_alignment="center")
+            with poster_col:
+                st.image(poster_url, use_container_width=True)
+        else:
+            left, right = st.columns([5, 1], vertical_alignment="center")
+
         with left:
             year = "—" if pd.isna(movie.get("release_year")) else str(int(movie["release_year"]))
             st.markdown(f"#### {movie['title']}")

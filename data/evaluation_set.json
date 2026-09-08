@@ -1,0 +1,217 @@
+{
+  "_metadata": {
+    "description": "Manually curated benchmark for CineMatch content-based recommendation evaluation.",
+    "curation_notes": [
+      "This is NOT derived from user interaction logs. There is no real user-interaction dataset.",
+      "Relevant sets were compiled by a human curator based on genre, themes, director, cast, and critical consensus of similarity.",
+      "All movie IDs are TMDB IDs verified to exist in the merged tmdb_5000_movies + tmdb_5000_credits dataset.",
+      "A movie is 'relevant' if a well-informed viewer who enjoyed the seed would plausibly also enjoy it for similar reasons.",
+      "Relevant sets are intentionally conservative (high precision, not exhaustive). Missing obvious matches is expected.",
+      "This benchmark should be used for relative comparison between models, NOT as an absolute quality score."
+    ],
+    "version": "1.0",
+    "n_seeds": 25
+  },
+  "evaluation_set": [
+    {
+      "seed_id": 27205,
+      "seed_title": "Inception",
+      "seed_genres": ["Action", "Thriller", "Science Fiction", "Mystery", "Adventure"],
+      "relevant_ids": [77, 1124, 155, 49026, 272, 807, 694],
+      "relevant_titles": ["Memento", "The Prestige", "The Dark Knight", "The Dark Knight Rises", "Batman Begins", "Se7en", "The Shining"],
+      "curation_note": "Nolan's cerebral, layered narratives and psychological thrillers"
+    },
+    {
+      "seed_id": 155,
+      "seed_title": "The Dark Knight",
+      "seed_genres": ["Drama", "Action", "Crime", "Thriller"],
+      "relevant_ids": [49026, 272, 364, 77, 1124, 807, 680],
+      "relevant_titles": ["The Dark Knight Rises", "Batman Begins", "Batman Returns", "Memento", "The Prestige", "Se7en", "Pulp Fiction"],
+      "curation_note": "Direct Batman sequels/prequels and crime thrillers of similar tone"
+    },
+    {
+      "seed_id": 157336,
+      "seed_title": "Interstellar",
+      "seed_genres": ["Adventure", "Drama", "Science Fiction"],
+      "relevant_ids": [62, 17431, 264660, 49047, 286217, 152601, 686, 27205],
+      "relevant_titles": ["2001: A Space Odyssey", "Moon", "Ex Machina", "Gravity", "The Martian", "Her", "Contact", "Inception"],
+      "curation_note": "Hard sci-fi exploring space, AI, and existential themes"
+    },
+    {
+      "seed_id": 603,
+      "seed_title": "The Matrix",
+      "seed_genres": ["Action", "Science Fiction"],
+      "relevant_ids": [604, 27205, 264660, 152601, 62, 49047],
+      "relevant_titles": ["The Matrix Reloaded", "Inception", "Ex Machina", "Her", "2001: A Space Odyssey", "Gravity"],
+      "curation_note": "Philosophical sci-fi and reality-bending action"
+    },
+    {
+      "seed_id": 24428,
+      "seed_title": "The Avengers",
+      "seed_genres": ["Science Fiction", "Action", "Adventure"],
+      "relevant_ids": [1726, 10195, 118340, 102899, 19995],
+      "relevant_titles": ["Iron Man", "Thor", "Guardians of the Galaxy", "Ant-Man", "Avatar"],
+      "curation_note": "MCU superhero ensemble and sci-fi action blockbusters"
+    },
+    {
+      "seed_id": 238,
+      "seed_title": "The Godfather",
+      "seed_genres": ["Drama", "Crime"],
+      "relevant_ids": [524, 111, 278, 680, 6977, 807],
+      "relevant_titles": ["Casino", "Scarface", "The Shawshank Redemption", "Pulp Fiction", "No Country for Old Men", "Se7en"],
+      "curation_note": "Prestige crime drama and organized crime narratives"
+    },
+    {
+      "seed_id": 680,
+      "seed_title": "Pulp Fiction",
+      "seed_genres": ["Thriller", "Crime"],
+      "relevant_ids": [500, 68718, 16869, 238, 524, 807, 278],
+      "relevant_titles": ["Reservoir Dogs", "Django Unchained", "Inglourious Basterds", "The Godfather", "Casino", "Se7en", "The Shawshank Redemption"],
+      "curation_note": "Tarantino style and non-linear crime films"
+    },
+    {
+      "seed_id": 862,
+      "seed_title": "Toy Story",
+      "seed_genres": ["Animation", "Comedy", "Family"],
+      "relevant_ids": [863, 10193, 12, 585, 9806, 14160],
+      "relevant_titles": ["Toy Story 2", "Toy Story 3", "Finding Nemo", "Monsters, Inc.", "The Incredibles", "Up"],
+      "curation_note": "Pixar animated family films with similar tone and craft"
+    },
+    {
+      "seed_id": 278,
+      "seed_title": "The Shawshank Redemption",
+      "seed_genres": ["Drama", "Crime"],
+      "relevant_ids": [238, 453, 489, 680, 73, 524],
+      "relevant_titles": ["The Godfather", "A Beautiful Mind", "Good Will Hunting", "Pulp Fiction", "American History X", "Casino"],
+      "curation_note": "Character-driven prestige dramas with redemption arcs"
+    },
+    {
+      "seed_id": 274,
+      "seed_title": "The Silence of the Lambs",
+      "seed_genres": ["Crime", "Drama", "Thriller"],
+      "relevant_ids": [807, 694, 680, 155, 6977, 238],
+      "relevant_titles": ["Se7en", "The Shining", "Pulp Fiction", "The Dark Knight", "No Country for Old Men", "The Godfather"],
+      "curation_note": "Psychological crime thrillers featuring compelling antagonists"
+    },
+    {
+      "seed_id": 550,
+      "seed_title": "Fight Club",
+      "seed_genres": ["Drama"],
+      "relevant_ids": [807, 680, 73, 278, 489, 453],
+      "relevant_titles": ["Se7en", "Pulp Fiction", "American History X", "The Shawshank Redemption", "Good Will Hunting", "A Beautiful Mind"],
+      "curation_note": "Provocative psychological dramas with unreliable narrators or dark themes"
+    },
+    {
+      "seed_id": 671,
+      "seed_title": "Harry Potter and the Philosopher's Stone",
+      "seed_genres": ["Adventure", "Fantasy", "Family"],
+      "relevant_ids": [672, 673, 120, 121, 8587, 19995],
+      "relevant_titles": ["Harry Potter and the Chamber of Secrets", "Harry Potter and the Prisoner of Azkaban", "The Fellowship of the Ring", "The Two Towers", "The Lion King", "Avatar"],
+      "curation_note": "Epic fantasy adventure films aimed at families"
+    },
+    {
+      "seed_id": 120,
+      "seed_title": "The Lord of the Rings: The Fellowship of the Ring",
+      "seed_genres": ["Adventure", "Fantasy", "Action"],
+      "relevant_ids": [121, 671, 672, 197, 652, 1271],
+      "relevant_titles": ["The Two Towers", "Harry Potter and the Philosopher's Stone", "Harry Potter and the Chamber of Secrets", "Braveheart", "Troy", "300"],
+      "curation_note": "Epic high-fantasy and historical battle epics"
+    },
+    {
+      "seed_id": 98,
+      "seed_title": "Gladiator",
+      "seed_genres": ["Action", "Drama", "Adventure"],
+      "relevant_ids": [197, 652, 1271, 120, 121, 857],
+      "relevant_titles": ["Braveheart", "Troy", "300", "The Fellowship of the Ring", "The Two Towers", "Saving Private Ryan"],
+      "curation_note": "Historical action epics featuring warriors and battle"
+    },
+    {
+      "seed_id": 597,
+      "seed_title": "Titanic",
+      "seed_genres": ["Drama", "Romance", "Thriller"],
+      "relevant_ids": [13, 489, 278, 453, 857],
+      "relevant_titles": ["Forrest Gump", "Good Will Hunting", "The Shawshank Redemption", "A Beautiful Mind", "Saving Private Ryan"],
+      "curation_note": "Sweeping emotional dramas with a strong romance or human story element"
+    },
+    {
+      "seed_id": 13,
+      "seed_title": "Forrest Gump",
+      "seed_genres": ["Comedy", "Drama", "Romance"],
+      "relevant_ids": [489, 453, 278, 73, 597],
+      "relevant_titles": ["Good Will Hunting", "A Beautiful Mind", "The Shawshank Redemption", "American History X", "Titanic"],
+      "curation_note": "Emotionally resonant character dramas spanning time or adversity"
+    },
+    {
+      "seed_id": 329,
+      "seed_title": "Jurassic Park",
+      "seed_genres": ["Adventure", "Science Fiction"],
+      "relevant_ids": [49047, 286217, 19995, 24428, 62],
+      "relevant_titles": ["Gravity", "The Martian", "Avatar", "The Avengers", "2001: A Space Odyssey"],
+      "curation_note": "High-concept adventure sci-fi with creature/survival stakes"
+    },
+    {
+      "seed_id": 19995,
+      "seed_title": "Avatar",
+      "seed_genres": ["Action", "Adventure", "Fantasy", "Science Fiction"],
+      "relevant_ids": [24428, 1726, 120, 329, 49047, 118340],
+      "relevant_titles": ["The Avengers", "Iron Man", "The Fellowship of the Ring", "Jurassic Park", "Gravity", "Guardians of the Galaxy"],
+      "curation_note": "Spectacular large-scale sci-fi/fantasy action adventures"
+    },
+    {
+      "seed_id": 807,
+      "seed_title": "Se7en",
+      "seed_genres": ["Crime", "Mystery", "Thriller"],
+      "relevant_ids": [694, 274, 680, 155, 6977, 550],
+      "relevant_titles": ["The Shining", "The Silence of the Lambs", "Pulp Fiction", "The Dark Knight", "No Country for Old Men", "Fight Club"],
+      "curation_note": "Dark, atmospheric crime thrillers with strong dread and mystery"
+    },
+    {
+      "seed_id": 424,
+      "seed_title": "Schindler's List",
+      "seed_genres": ["Drama", "History", "War"],
+      "relevant_ids": [857, 28, 197, 652, 278],
+      "relevant_titles": ["Saving Private Ryan", "Apocalypse Now", "Braveheart", "Troy", "The Shawshank Redemption"],
+      "curation_note": "Serious historical dramas dealing with war, atrocity, and humanity"
+    },
+    {
+      "seed_id": 857,
+      "seed_title": "Saving Private Ryan",
+      "seed_genres": ["Drama", "History", "War"],
+      "relevant_ids": [424, 28, 197, 1271, 652],
+      "relevant_titles": ["Schindler's List", "Apocalypse Now", "Braveheart", "300", "Troy"],
+      "curation_note": "Intense war films with authentic depictions of combat"
+    },
+    {
+      "seed_id": 1726,
+      "seed_title": "Iron Man",
+      "seed_genres": ["Action", "Science Fiction", "Adventure"],
+      "relevant_ids": [10195, 24428, 118340, 102899, 19995, 603],
+      "relevant_titles": ["Thor", "The Avengers", "Guardians of the Galaxy", "Ant-Man", "Avatar", "The Matrix"],
+      "curation_note": "MCU entries and high-energy sci-fi action"
+    },
+    {
+      "seed_id": 453,
+      "seed_title": "A Beautiful Mind",
+      "seed_genres": ["Drama"],
+      "relevant_ids": [489, 278, 13, 73, 597],
+      "relevant_titles": ["Good Will Hunting", "The Shawshank Redemption", "Forrest Gump", "American History X", "Titanic"],
+      "curation_note": "Prestige dramas centered on exceptional individuals overcoming adversity"
+    },
+    {
+      "seed_id": 68718,
+      "seed_title": "Django Unchained",
+      "seed_genres": ["Drama", "Western"],
+      "relevant_ids": [16869, 500, 680, 6977, 28],
+      "relevant_titles": ["Inglourious Basterds", "Reservoir Dogs", "Pulp Fiction", "No Country for Old Men", "Apocalypse Now"],
+      "curation_note": "Tarantino-style revisionist genre films and violent Westerns"
+    },
+    {
+      "seed_id": 694,
+      "seed_title": "The Shining",
+      "seed_genres": ["Horror", "Thriller"],
+      "relevant_ids": [807, 274, 550, 155, 6977],
+      "relevant_titles": ["Se7en", "The Silence of the Lambs", "Fight Club", "The Dark Knight", "No Country for Old Men"],
+      "curation_note": "Psychologically intense horror and thriller films"
+    }
+  ]
+}

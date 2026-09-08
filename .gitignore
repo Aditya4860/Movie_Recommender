@@ -9,6 +9,9 @@ venv/
 
 # Generated model files
 artifacts/
+models/*.joblib
+models/*.parquet
+# Keep manifest for reference
 
 # Local datasets (too large for this starter repository)
 data/*.csv

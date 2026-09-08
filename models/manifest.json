@@ -1,0 +1,21 @@
+{
+  "built_at": "2026-09-08T20:36:36.094317+00:00",
+  "method": "tfidf",
+  "weights": {
+    "overview": 1,
+    "genres": 3,
+    "keywords": 3,
+    "cast": 2,
+    "director": 3
+  },
+  "corpus_size": 4800,
+  "matrix_shape": [
+    4800,
+    4800
+  ],
+  "matrix_dtype": "float32",
+  "artifacts": {
+    "matrix": "recommender.joblib",
+    "movies": "movies.parquet"
+  }
+}

@@ -7,15 +7,23 @@ import streamlit as st
 
 from src.api import fetch_poster_url, fetch_trailer_url
 from src.catalog import load_catalog
-from src.recommender import MovieRecommender
+from src.recommender import MovieRecommender, VectorizerMethod
 
 
-@st.cache_resource(show_spinner="Preparing the recommendation engine...")
-def get_recommender() -> MovieRecommender | None:
+@st.cache_resource(show_spinner="Preparing the recommendation engine...", hash_funcs={str: lambda x: x})
+def get_recommender(method: VectorizerMethod = "count") -> MovieRecommender | None:
+    """Load and cache a MovieRecommender for the chosen vectorizer method.
+
+    A separate cached instance is kept per method so switching between
+    CountVectorizer and TF-IDF does not force a re-fit of the other.
+    """
     try:
-        return MovieRecommender.from_csv("data")
+        return MovieRecommender.from_csv("data", method=method)
     except FileNotFoundError:
-        st.error("Dataset not found. Please download `tmdb_5000_movies.csv` and `tmdb_5000_credits.csv` and place them in the `data/` directory.")
+        st.error(
+            "Dataset not found. Please download `tmdb_5000_movies.csv` and "
+            "`tmdb_5000_credits.csv` and place them in the `data/` directory."
+        )
         st.stop()
 
 

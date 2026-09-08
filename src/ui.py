@@ -11,13 +11,21 @@ from src.recommender import MovieRecommender
 
 
 @st.cache_resource(show_spinner="Preparing the recommendation engine...")
-def get_recommender() -> MovieRecommender:
-    return MovieRecommender.from_csv("data")
+def get_recommender() -> MovieRecommender | None:
+    try:
+        return MovieRecommender.from_csv("data")
+    except FileNotFoundError:
+        st.error("Dataset not found. Please download `tmdb_5000_movies.csv` and `tmdb_5000_credits.csv` and place them in the `data/` directory.")
+        st.stop()
 
 
 @st.cache_data(show_spinner=False)
-def get_catalog() -> pd.DataFrame:
-    return load_catalog("data")
+def get_catalog() -> pd.DataFrame | None:
+    try:
+        return load_catalog("data")
+    except FileNotFoundError:
+        st.error("Dataset not found. Please download `tmdb_5000_movies.csv` and `tmdb_5000_credits.csv` and place them in the `data/` directory.")
+        st.stop()
 
 
 def movie_row(movie: pd.Series, show_add: bool = True) -> None:
@@ -45,16 +53,16 @@ def movie_row(movie: pd.Series, show_add: bool = True) -> None:
             # Interactive rating
             rating_key = f"rating_{movie['id']}"
             if rating_key not in st.session_state:
-                st.session_state[rating_key] = st.session_state.ratings.get(movie["title"], None)
+                st.session_state[rating_key] = st.session_state.ratings.get(movie["id"], None)
                 
             st.write("Your rating:")
             rating = st.feedback("stars", key=rating_key)
             if rating is not None:
-                st.session_state.ratings[movie["title"]] = rating
+                st.session_state.ratings[movie["id"]] = rating
 
         if show_add:
             with right:
-                saved = movie["title"] in st.session_state.favourites
+                saved = movie["id"] in st.session_state.favourites
                 if st.button(
                     "Saved" if saved else "Save",
                     icon=":material/bookmark_added:" if saved else ":material/bookmark_add:",
@@ -62,7 +70,7 @@ def movie_row(movie: pd.Series, show_add: bool = True) -> None:
                     disabled=saved,
                     use_container_width=True,
                 ):
-                    st.session_state.favourites.append(movie["title"])
+                    st.session_state.favourites.append(movie["id"])
                     st.toast(f"Added {movie['title']} to My list", icon=":material/bookmark_added:")
                     st.rerun()
 

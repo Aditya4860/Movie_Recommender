@@ -15,9 +15,19 @@ if not saved:
     st.stop()
 
 st.metric("Saved movies", len(saved), border=True)
-for title in saved:
-    movie = catalog.loc[catalog["title"].eq(title)].iloc[0]
+for movie_id in saved:
+    # Handle legacy title-based favourites gracefully if they exist
+    if isinstance(movie_id, str):
+        movie_matches = catalog.loc[catalog["title"].eq(movie_id)]
+        if movie_matches.empty:
+            continue
+        movie = movie_matches.iloc[0]
+        actual_id = movie["id"]
+    else:
+        movie = catalog.loc[catalog["id"].eq(movie_id)].iloc[0]
+        actual_id = movie_id
+        
     movie_row(movie, show_add=False)
-    if st.button("Remove", icon=":material/bookmark_remove:", key=f"remove_{movie['id']}"):
-        st.session_state.favourites.remove(title)
+    if st.button("Remove", icon=":material/bookmark_remove:", key=f"remove_{actual_id}"):
+        st.session_state.favourites.remove(movie_id)
         st.rerun()

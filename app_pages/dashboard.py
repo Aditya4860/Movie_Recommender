@@ -31,10 +31,18 @@ with right:
     with st.container(border=True):
         st.subheader("Start with a favourite")
         st.write("Pick one film and let the model find titles with similar story, genre, cast, keywords, and director.")
-        st.selectbox("Choose a title", recommender.titles, index=None, placeholder="Search the movie library…", key="dashboard_movie")
+        movie_options = catalog.set_index('id')['title'].to_dict()
+        selected_id = st.selectbox(
+            "Choose a title", 
+            options=list(movie_options.keys()),
+            format_func=lambda x: movie_options[x],
+            index=None, 
+            placeholder="Search the movie library…", 
+            key="dashboard_movie_id"
+        )
         if st.button("Open recommendations", type="primary", icon=":material/auto_awesome:"):
-            if st.session_state.dashboard_movie:
-                st.session_state.recommendation_seed = st.session_state.dashboard_movie
+            if st.session_state.dashboard_movie_id:
+                st.session_state.recommendation_seed_id = st.session_state.dashboard_movie_id
                 st.switch_page("app_pages/recommend.py")
             else:
                 st.toast("Choose a movie first", icon=":material/info:")

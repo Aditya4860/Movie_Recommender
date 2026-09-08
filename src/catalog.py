@@ -6,16 +6,16 @@ from pathlib import Path
 
 import pandas as pd
 
-from src.recommender import MOVIE_FILE_NAMES, _find_data_file, _parse_json_list
+from src.data import load_base_datasets, parse_json_list
 
 
 def _genre_names(value: object) -> list[str]:
-    return [item["name"] for item in _parse_json_list(value) if item.get("name")]
+    return [item["name"] for item in parse_json_list(value) if item.get("name")]
 
 
 def load_catalog(data_dir: str | Path = "data") -> pd.DataFrame:
     """Load display metadata from the TMDB movie CSV without model retraining."""
-    movies = pd.read_csv(_find_data_file(data_dir, MOVIE_FILE_NAMES))
+    movies, _ = load_base_datasets(data_dir)
     catalog = movies[
         ["id", "title", "overview", "genres", "release_date", "vote_average", "vote_count", "popularity", "runtime"]
     ].copy()
@@ -27,7 +27,7 @@ def load_catalog(data_dir: str | Path = "data") -> pd.DataFrame:
     catalog["vote_count"] = catalog["vote_count"].fillna(0).astype(int)
     catalog["popularity"] = catalog["popularity"].fillna(0.0)
     catalog["runtime"] = catalog["runtime"].fillna(0).astype(int)
-    return catalog.drop_duplicates(subset="title").reset_index(drop=True)
+    return catalog.drop_duplicates(subset="id").reset_index(drop=True)
 
 
 def top_movies(catalog: pd.DataFrame, count: int = 10) -> pd.DataFrame:

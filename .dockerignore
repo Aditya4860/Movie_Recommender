@@ -1,0 +1,36 @@
+# Git / development artefacts
+.git/
+.gitignore
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Secrets — never bake into image
+.env
+.streamlit/secrets.toml
+
+# Raw CSVs (large; model artefacts are copied separately)
+data/*.csv
+
+# Large binary model files (copied explicitly in Dockerfile)
+# Uncomment to exclude and mount them as a volume instead:
+# models/
+
+# Development / documentation
+README.md
+*.md
+.github/
+scripts/
+tests/
+
+# Logs
+*.log
+*.err.log
+
+# IDE
+.vscode/
+.idea/

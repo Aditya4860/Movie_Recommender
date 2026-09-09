@@ -1,0 +1,63 @@
+name: Tests
+
+on:
+  push:
+    branches: ["main", "master"]
+  pull_request:
+    branches: ["main", "master"]
+
+jobs:
+  test:
+    name: pytest – Python ${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Download TMDB dataset
+        # The recommender unit tests use a tiny synthetic in-memory dataset
+        # and do NOT need the real CSVs.  The API tests load from models/,
+        # which requires build_model.py to have been run.
+        # We place placeholder files so imports that probe data/ don't fail,
+        # then build the model from the real data if available.
+        run: |
+          mkdir -p data models
+          # If the dataset is available (e.g. via a repository secret / artifact),
+          # build the model; otherwise skip the API integration tests.
+          if [ -f "data/tmdb_5000_movies.csv" ] && [ -f "data/tmdb_5000_credits.csv" ]; then
+            python scripts/build_model.py
+          else
+            echo "Dataset not found — API integration tests will be skipped."
+          fi
+
+      - name: Run pytest
+        run: |
+          python -m pytest tests/ -v --tb=short \
+            --ignore=tests/test_api.py \
+            -q
+        # test_api.py is skipped here unless model artifacts exist.
+        # It will self-skip via pytest.skip() when models/ is absent.
+
+      - name: Run all tests including API (if model exists)
+        run: |
+          if [ -f "models/recommender.joblib" ]; then
+            python -m pytest tests/ -v --tb=short
+          else
+            echo "Model artifacts absent — running core tests only."
+            python -m pytest tests/test_recommender.py tests/test_evaluation.py -v --tb=short
+          fi

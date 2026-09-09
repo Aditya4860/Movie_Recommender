@@ -25,13 +25,13 @@ with st.form("recommendation_form", border=True):
     result_count = st.segmented_control("Number of results", [5, 8, 10], default=5)
     method = st.radio(
         "Vectorizer",
-        options=["count", "tfidf"],
-        format_func=lambda x: "CountVectorizer (baseline)" if x == "count" else "TF-IDF",
+        options=["tfidf", "count"],
+        format_func=lambda x: "TF-IDF (production model)" if x == "tfidf" else "CountVectorizer (baseline)",
         horizontal=True,
         help=(
-            "**CountVectorizer** uses raw word frequency (bag-of-words). "
-            "**TF-IDF** down-weights common words and up-weights rare, "
-            "distinctive terms — often surfacing more niche matches."
+            "**TF-IDF** is the production model selected after benchmarking — it down-weights "
+            "common words and amplifies rare, distinctive terms (director name, niche keywords). "
+            "**CountVectorizer** is the baseline using raw word frequency (bag-of-words)."
         ),
     )
     submitted = st.form_submit_button(
@@ -47,8 +47,8 @@ if not chosen_id:
     st.info("Choose a title and build recommendations to begin.", icon=":material/lightbulb:")
     st.stop()
 
-# Use last submitted method, defaulting to count
-active_method = st.session_state.get("recommendation_method", "count")
+# Use last submitted method, defaulting to the production model (tfidf)
+active_method = st.session_state.get("recommendation_method", "tfidf")
 recommender = get_recommender(active_method)
 
 method_label = "CountVectorizer" if active_method == "count" else "TF-IDF"

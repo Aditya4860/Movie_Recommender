@@ -1,22 +1,39 @@
 """Shared Streamlit loaders and small rendering helpers."""
 
 from __future__ import annotations
+from pathlib import Path
 
 import pandas as pd
 import streamlit as st
 
 from src.api import fetch_poster_url, fetch_trailer_url
 from src.catalog import load_catalog
+from src.model_store import load_model
 from src.recommender import MovieRecommender, VectorizerMethod
 
+_MODELS_DIR = Path("models")
+_ARTIFACTS_PRESENT = (_MODELS_DIR / "recommender.joblib").exists()
 
-@st.cache_resource(show_spinner="Preparing the recommendation engine...", hash_funcs={str: lambda x: x})
-def get_recommender(method: VectorizerMethod = "count") -> MovieRecommender | None:
-    """Load and cache a MovieRecommender for the chosen vectorizer method.
 
-    A separate cached instance is kept per method so switching between
-    CountVectorizer and TF-IDF does not force a re-fit of the other.
+@st.cache_resource(show_spinner="Loading recommendation engine…")
+def get_recommender(method: VectorizerMethod = "tfidf") -> MovieRecommender | None:
+    """Return the production MovieRecommender.
+
+    Load strategy (fastest first):
+      1. If ``models/recommender.joblib`` exists, load the persisted TF-IDF
+         model instantly (~< 1 s) — this is the production path.
+      2. Otherwise train from the raw CSV files (~9 s) — development fallback.
+
+    A separate cached instance is kept per method when training live so that
+    switching between CountVectorizer and TF-IDF is non-destructive.
+    The persisted model always uses TF-IDF (the selected production model).
     """
+    if _ARTIFACTS_PRESENT:
+        try:
+            return load_model(_MODELS_DIR)
+        except Exception as exc:
+            st.warning(f"Could not load persisted model ({exc}); training from CSV…")
+    # Fallback: train from raw CSVs
     try:
         return MovieRecommender.from_csv("data", method=method)
     except FileNotFoundError:
